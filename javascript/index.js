@@ -60,7 +60,7 @@ function createTemplate(index, arrayList) {
       <h4>Phone Book #${index+1}</h4>
       <p class="animated bounceIn">Name : ${arrayList.name} <br> Address : ${arrayList.address}
       <br> Phone Number : ${arrayList.phonenumber} <br> Post Code : ${arrayList.postcode}</p>
-      <input type="button" id="delete-${index}" name="toggledelete" class="delete" onclick="toggleHandler(1)" value="Delete"></input>
+      <input type="button" id="delete-${index}" name="toggledelete" class="delete" value="Delete"></input>
       <input type="button" id="edit-${index}" name="toggleedit" class="edit" onclick="toggleHandler(1)" value="Edit"></input>
     </div>
   <section>
@@ -140,10 +140,10 @@ function cancel() {
 }
 
 function saveEdit() {
-  const contacts = getPhoneBook();
+  const contacts1 = getPhoneBook();
   console.log(updatedIndex)
-  contacts.splice(Number(updatedIndex), 1);
-  setPhoneBook(contacts)
+  contacts1.splice(Number(updatedIndex), 1);
+  setPhoneBook(contacts1)
   submitNewContact();
   addNewContact()
   document.getElementById("newName").value = "";
