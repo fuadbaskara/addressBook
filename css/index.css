@@ -1,0 +1,12 @@
+.container1 {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.container2 {
+  padding: 10px;
+}
+
+.beautify {
+  padding: 15px;
+}
