@@ -5,6 +5,7 @@ const saveButton = document.getElementById("save");
 const cancelButton = document.getElementById("cancel");
 const arrayLog = [];
 const parser = new DOMParser();
+var updatedIndex = "";
 
 function submitNewContact() {
   const name = document.getElementById("newName").value;
@@ -59,7 +60,8 @@ function createTemplate(index, arrayList) {
       <h4>Phone Book #${index+1}</h4>
       <p class="animated bounceIn">Name : ${arrayList.name} <br> Address : ${arrayList.address}
       <br> Phone Number : ${arrayList.phonenumber} <br> Post Code : ${arrayList.postcode}</p>
-      <button id="delete-${index}" class="delete">Delete</button><button id="edit-${index}" class="edit">Edit</button>
+      <input type="button" id="delete-${index}" name="toggledelete" class="delete" onclick="toggleHandler(1)" value="Delete"></input>
+      <input type="button" id="edit-${index}" name="toggleedit" class="edit" onclick="toggleHandler(1)" value="Edit"></input>
     </div>
   <section>
     `;
@@ -98,20 +100,20 @@ function editContact(event) {
     const id = event.target.id.replace("edit-", "");
     const contacts = getPhoneBook();
     const objectContact = contacts[id];
-    contacts.splice(id, 1);
-    setPhoneBook(contacts);
+    updatedIndex = id;
+    // setPhoneBook(contacts);
     document.getElementById("newName").value = objectContact.name;
     document.getElementById("newAddress").value = objectContact.address;
     document.getElementById("newPhone").value = objectContact.phonenumber;
     document.getElementById("newPost").value = objectContact.postcode;
-    cancelEdit();
+    logEdit();
   } else {
+    logEdit();
     cancel();
   }
 }
 
-function cancelEdit() {
-
+function logEdit() {
   const name = document.getElementById("newName").value;
   const address = document.getElementById("newAddress").value;
   const phoneNumber = document.getElementById("newPhone").value;
@@ -128,7 +130,9 @@ function cancelEdit() {
 
 function cancel() {
   const arrayList = arrayLog;
+
   console.log(arrayLog);
+
   document.getElementById("newName").value = arrayList[0].name;
   document.getElementById("newAddress").value = arrayList[0].address;
   document.getElementById("newPhone").value = arrayList[0].phonenumber;
@@ -136,20 +140,57 @@ function cancel() {
 }
 
 function saveEdit() {
+  const contacts = getPhoneBook();
+  console.log(updatedIndex)
+  contacts.splice(Number(updatedIndex), 1);
+  setPhoneBook(contacts)
   submitNewContact();
   addNewContact()
+  document.getElementById("newName").value = "";
+  document.getElementById("newAddress").value = "";
+  document.getElementById("newPhone").value = "";
+  document.getElementById("newPost").value = "";
 }
 
 function searchContact() {
 
 }
 
+function toggleHandler(condition) {
+  const toggleSave = document.getElementById("saveButton");
+  const toggleCancel = document.getElementById("cancelButton");
+  const toggleSubmit = document.getElementById("submitAll");
+  const toggleSearch = document.getElementById("search");
+  // const toggleDelete = document.getElementsByName("toggledelete");
+  const toggleSearchText = document.getElementById("searchText");
+  // const toggleDelete = document.getElementById("deleteTog");
+
+  toggleSave.style.display = "none";
+  toggleCancel.style.display = "none";
+  toggleSearchText.style.display = "none";
+
+  if (condition === 1) {
+    toggleSave.style.display = "block";
+    toggleCancel.style.display = "block";
+    toggleSubmit.style.display = "none";
+    toggleSearch.style.display = "none";
+    // toggleDelete.style.display = "none";
+  } else if (condition === 2) {
+    toggleSave.style.display = "none";
+    toggleCancel.style.display = "none";
+    toggleSubmit.style.display = "block";
+    toggleSearch.style.display = "block";
+  } else if (condition === 3) {
+    toggleSearchText.style.display = "block";
+  }
+}
+
+toggleHandler()
 addNewContact();
 addButton.addEventListener("click", displayAllPhoneBook);
 outputBox.addEventListener("click", deleteContact);
 outputBox.addEventListener("click", editContact);
 saveButton.addEventListener("click", saveEdit);
 cancelButton.addEventListener("click", cancel)
-
 // editButton.addEventListener("click", editContact);
 // searchButton.addEventListener("click", searchContact)

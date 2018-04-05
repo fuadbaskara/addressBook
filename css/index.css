@@ -4,9 +4,18 @@
 }
 
 .container2 {
-  padding: 10px;
+  padding: 15px;
 }
 
 .beautify {
   padding: 15px;
+}
+
+.contain {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.title {
+  padding: 20px;
 }
