@@ -3,6 +3,7 @@ const outputBox = document.getElementById("phonebook-output");
 const searchButton = document.getElementById("search");
 const saveButton = document.getElementById("save");
 const cancelButton = document.getElementById("cancel");
+const searchText = document.getElementById("newSearch");
 
 const arrayLog = [];
 const parser = new DOMParser();
@@ -99,8 +100,6 @@ function deleteContact(event) {
 
 function editContact(event) {
   if (event.target.matches(".edit")) {
-    console.log("CALLED EDIT");
-
     const id = event.target.id.replace("edit-", "");
     const contactss = getPhoneBook();
     console.log(contactss);
@@ -159,41 +158,63 @@ function saveEdit() {
   document.getElementById("newPost").value = "";
 }
 
-function searchContact() {}
-
-function toggleHandler(condition) {
-  const toggleSave = document.getElementById("saveButton");
-  const toggleCancel = document.getElementById("cancelButton");
-  const toggleSubmit = document.getElementById("submitAll");
-  const toggleSearch = document.getElementById("search");
-  const toggleSearchText = document.getElementById("searchText");
-
-  toggleSave.style.display = "none";
-  toggleCancel.style.display = "none";
-  toggleSearchText.style.display = "none";
-
-  if (condition === 1) {
-    toggleSave.style.display = "block";
-    toggleCancel.style.display = "block";
-    toggleSubmit.style.display = "none";
-    toggleSearch.style.display = "none";
-  } else if (condition === 2) {
-    toggleSave.style.display = "none";
-    toggleCancel.style.display = "none";
-    toggleSubmit.style.display = "block";
-    toggleSearch.style.display = "block";
-  } else if (condition === 3) {
-    toggleSearchText.style.display = "block";
+function searchContact() {
+  if (event.target.matches(".searchText")) {
+    const value = event.target.value.toLowerCase();
+    const arrayContact = getPhoneBook();
+    const filtered = arrayContact.filter(contact =>
+      contact.name.toLowerCase().includes(value));
+      console.log(filtered);
+    return filtered;
   }
 }
 
-toggleHandler();
-addNewContact();
+  function searchDisplay() {
+    outputBox.innerHTML = "";
+    const arrayList = searchContact();
+    for (var index = 0; index < arrayList.length; index++) {
+      const nodeString = createTemplate(index, arrayList[index]);
+      const doc = parser.parseFromString(nodeString, "text/html");
+      const node = doc.body.firstChild;
+      outputBox.append(node);
+    }
+  }
 
-addButton.addEventListener("click", displayAllPhoneBook);
-outputBox.addEventListener("click", deleteContact);
-outputBox.addEventListener("click", editContact);
-saveButton.addEventListener("click", saveEdit);
-cancelButton.addEventListener("click", cancel);
-// editButton.addEventListener("click", editContact);
-// searchButton.addEventListener("click", searchContact)
+  function toggleHandler(condition) {
+    const toggleSave = document.getElementById("saveButton");
+    const toggleCancel = document.getElementById("cancelButton");
+    const toggleSubmit = document.getElementById("submitAll");
+    const toggleSearch = document.getElementById("search");
+    const toggleSearchText = document.getElementById("searchText");
+
+    toggleSave.style.display = "none";
+    toggleCancel.style.display = "none";
+    toggleSearchText.style.display = "none";
+
+    if (condition === 1) {
+      toggleSave.style.display = "block";
+      toggleCancel.style.display = "block";
+      toggleSubmit.style.display = "none";
+      toggleSearch.style.display = "none";
+    } else if (condition === 2) {
+      toggleSave.style.display = "none";
+      toggleCancel.style.display = "none";
+      toggleSubmit.style.display = "block";
+      toggleSearch.style.display = "block";
+    } else if (condition === 3) {
+      toggleSearchText.style.display = "block";
+      searchContact(event);
+    }
+  }
+
+  toggleHandler();
+  addNewContact();
+
+  addButton.addEventListener("click", displayAllPhoneBook);
+  outputBox.addEventListener("click", deleteContact);
+  outputBox.addEventListener("click", editContact);
+  saveButton.addEventListener("click", saveEdit);
+  cancelButton.addEventListener("click", cancel);
+  searchText.addEventListener("keyup", searchDisplay);
+  // editButton.addEventListener("click", editContact);
+  // searchButton.addEventListener("click", searchContact)
