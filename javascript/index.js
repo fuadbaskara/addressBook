@@ -56,18 +56,17 @@ function setPhoneBook(newContacts) {
 
 function createTemplate(index, arrayList) {
   const template = `
-  <section class="template">
-    <div id="${index + 1}" class="beautify">
-      <h4>Phone Book #${index + 1}</h4>
-      <p class="animated bounceIn">Name: ${arrayList.name}
-      <br>Address: ${arrayList.address}
-      <br>Phone Number: ${arrayList.phonenumber}
-      <br>Post Code: ${arrayList.postcode}</p>
-      <input type="button" id="delete-${index}" name="toggledelete" class="delete" value="Delete"></input>
-      <input type="button" id="edit-${index}" name="toggleedit" class="edit" onclick="toggleHandler(1)" value="Edit"></input>
-    </div>
-  <section>
-    `;
+    <section class="template">
+      <div id="${index + 1}" class="beautify">
+        <h4>Phone Book #${index + 1}</h4>
+        <p class="animated bounceIn">Name: ${arrayList.name}
+        <br>Address: ${arrayList.address}
+        <br>Phone Number: ${arrayList.phonenumber}
+        <br>Post Code: ${arrayList.postcode}</p>
+        <input type="button" id="delete-${index}" name="toggledelete" class="delete" value="Delete"></input>
+        <input type="button" id="edit-${index}" name="toggleedit" class="edit" onclick="toggleHandler(1)" value="Edit"></input>
+      </div>
+    <section>`;
   return template;
 }
 
