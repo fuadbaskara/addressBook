@@ -60,7 +60,7 @@ function createTemplate(index, arrayList) {
       <h4>Phone Book #${index+1}</h4>
       <p class="animated bounceIn">Name : ${arrayList.name} <br> Address : ${arrayList.address}
       <br> Phone Number : ${arrayList.phonenumber} <br> Post Code : ${arrayList.postcode}</p>
-      <input type="button" id="delete-${index}" name="toggledelete" class="delete" value="Delete"></input>
+      <input type="button" id="delete-${index}" class="delete" value="Delete"></input>
       <input type="button" id="edit-${index}" name="toggleedit" class="edit" onclick="toggleHandler(1)" value="Edit"></input>
     </div>
   <section>
@@ -89,7 +89,7 @@ function deleteContact(event) {
     const id = event.target.id.replace("delete-", "");
     console.log(id)
     const contacts = getPhoneBook();
-    contacts.splice(id, 1); // delete the object with specified index
+    contacts.splice(id, 1);
     setPhoneBook(contacts);
     addNewContact();
   }
@@ -98,8 +98,9 @@ function deleteContact(event) {
 function editContact(event) {
   if (event.target.matches(".edit")) {
     const id = event.target.id.replace("edit-", "");
-    const contacts = getPhoneBook();
-    const objectContact = contacts[id];
+    const contactss = getPhoneBook();
+    console.log(contactss);
+    const objectContact = contactss[id];
     updatedIndex = id;
     // setPhoneBook(contacts);
     document.getElementById("newName").value = objectContact.name;
@@ -109,7 +110,6 @@ function editContact(event) {
     logEdit();
   } else {
     logEdit();
-    cancel();
   }
 }
 
@@ -161,9 +161,7 @@ function toggleHandler(condition) {
   const toggleCancel = document.getElementById("cancelButton");
   const toggleSubmit = document.getElementById("submitAll");
   const toggleSearch = document.getElementById("search");
-  // const toggleDelete = document.getElementsByName("toggledelete");
   const toggleSearchText = document.getElementById("searchText");
-  // const toggleDelete = document.getElementById("deleteTog");
 
   toggleSave.style.display = "none";
   toggleCancel.style.display = "none";
@@ -174,7 +172,6 @@ function toggleHandler(condition) {
     toggleCancel.style.display = "block";
     toggleSubmit.style.display = "none";
     toggleSearch.style.display = "none";
-    // toggleDelete.style.display = "none";
   } else if (condition === 2) {
     toggleSave.style.display = "none";
     toggleCancel.style.display = "none";
